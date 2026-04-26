@@ -1,10 +1,10 @@
-# TaskPulse — AI‑assisted task management for modern teams
+# task-us — AI‑assisted task management for modern teams
 
 A production-grade, full‑stack task management system with real‑time notifications, role‑based access, attendance tracking, file uploads, and a suite of AI capabilities (task suggestions, subtasks, semantic search, reports, insights, comment summarization, and daily digests) powered by Groq, Google Gemini, Hugging Face, and Cohere.
 
-> Repo: https://github.com/RiyaKaushik-tech/TaskPulse  
-> Live Demo (Frontend): https://task-pulse-jo23.onrender.com  
-> API Base (Backend default): https://taskpulse-backend-jaye.onrender.com
+> Repo: https://github.com/RiyaKaushik-tech/task-us  
+> Live Demo (Frontend): https://task-us-jo23.onrender.com  
+> API Base (Backend default): https://task-us-backend-jaye.onrender.com
 
 ---
 
@@ -37,7 +37,7 @@ A production-grade, full‑stack task management system with real‑time notific
 
 ## Technical Architecture Overview
 
-TaskPulse is a split frontend/backend system:
+task-us is a split frontend/backend system:
 
 - **Frontend (Vite + React)** calls the backend through an `axios` instance.
   - Authentication token is persisted in `localStorage` and attached as `Authorization: Bearer <token>` by an interceptor.
@@ -107,7 +107,7 @@ TaskPulse is a split frontend/backend system:
 ## Folder Structure
 
 ```text
-TaskPulse/
+task-us/
 ├─ backend/
 │  ├─ controllers/
 │  │  ├─ ai.controller.js
@@ -169,8 +169,8 @@ TaskPulse/
 
 ### Clone
 ```bash
-git clone https://github.com/RiyaKaushik-tech/TaskPulse.git
-cd TaskPulse
+git clone https://github.com/RiyaKaushik-tech/task-us.git
+cd task-us
 ```
 
 ### Backend
@@ -203,15 +203,15 @@ PORT=5000
 NODE_ENV=development
 
 # Database
-MONGO_URI=mongodb://localhost:27017/taskpulse
+MONGO_URI=mongodb://localhost:27017/task-us
 
 # Auth
 JWT_SECRET=your-strong-secret
 ADMIN_JOIN_CODE=your-admin-join-code
 
 # CORS / Frontend
-FRONTEND_URL=https://task-pulse-jo23.onrender.com
-CORS_ORIGIN=https://task-pulse-jo23.onrender.com
+FRONTEND_URL=https://task-us-jo23.onrender.com
+CORS_ORIGIN=https://task-us-jo23.onrender.com
 
 # AI Providers
 GROQ_API_KEY=your_groq_key
@@ -225,7 +225,7 @@ COHERE_API_KEY=your_cohere_key
 ```env
 VITE_API_BASE=http://localhost:5000
 # production example:
-# VITE_API_BASE=https://taskpulse-backend-jaye.onrender.com
+# VITE_API_BASE=https://task-us-backend-jaye.onrender.com
 ```
 
 ---
