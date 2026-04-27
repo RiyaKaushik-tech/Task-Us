@@ -7,7 +7,7 @@ export const initSocket = ({ token } = {}) => {
     if (!token) return null;
     if (socket?.connected) return socket;
     
-    const base = import.meta.env.VITE_API_BASE || "https://taskpulse-backend-jaye.onrender.com";
+    const base = import.meta.env.VITE_API_BASE || "https://Task-Us-backend-jaye.onrender.com";
     socket = io(base, {
       auth: { token },
       withCredentials: true,

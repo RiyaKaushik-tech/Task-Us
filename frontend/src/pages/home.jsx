@@ -67,7 +67,7 @@ const HomePage= () => {
             transition={{ duration: 0.6 }}
             className="text-4xl lg:text-6xl font-extrabold bg-clip-text text-transparent bg-linear-to-r from-green-600 to-green-400 dark:from-green-400 dark:to-green-300"
           >
-            TASK PULSE
+            Task-Us
           </motion.h1>
 
           <motion.p
