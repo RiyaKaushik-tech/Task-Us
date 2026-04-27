@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import {FaEye, FaEyeSlash, FaPeopleGroup, } from "react-icons/fa6"
+import { FaEye, FaEyeSlash, FaPeopleGroup } from "react-icons/fa6"
 import { Link, useNavigate } from 'react-router-dom';
-import { signInFailure, signInStart, signInSuccess } from '../../redux/slice/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { signInFailure, signInSuccess } from '../../redux/slice/userSlice';
+import { useDispatch } from 'react-redux';
 import { validateEmail } from '../../utils/helper';
 import AuthLayout from '../../components/AuthLayout';
 import axiosInstance from '../../utils/axiosInstance';
@@ -16,33 +16,26 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  
-  const { loading } = useSelector((state) => state.user)
-
-  const [showPassword, setShowPassword] = useState(false)
-
-   const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     if (!validateEmail(email)) {
-      setError("Please enter a valid email address")
-      toast.error("Please enter a valid email address")
-      return
+      setError("Please enter a valid email address");
+      toast.error("Please enter a valid email address");
+      return;
     }
 
     if (!password) {
-      setError("Please enter the password")
-      toast.error("Please enter the password")
-      return
+      setError("Please enter the password");
+      toast.error("Please enter the password");
+      return;
     }
 
-    setError(null)
+    setError("");
 
-    // Login API call
     try {
-      dispatch(signInStart())
-
       const response = await axiosInstance.post(
         "/auth/signIn",
         {
@@ -52,54 +45,52 @@ const Login = () => {
         {
           withCredentials: true,
         }
-      )
+      );
 
-      // console.log(response.data)
-      
-      // Save token to localStorage for API requests
       if (response.data.token) {
-        localStorage.setItem("token", response.data.token)
+        localStorage.setItem("token", response.data.token);
       }
 
       if (response.data.role === "admin") {
-        dispatch(signInSuccess(response.data))
-        toast.success("Admin Login successfully!")
-        navigate("/admin/dashboard")
+        dispatch(signInSuccess(response.data));
+        toast.success("Admin Login successfully!");
+        navigate("/admin/dashboard");
       } else {
-        dispatch(signInSuccess(response.data))
-        toast.success("User Login successfully!")
-        navigate("/users/userDashboard")
+        dispatch(signInSuccess(response.data));
+        toast.success("User Login successfully!");
+        navigate("/users/userDashboard");
       }
+
     } catch (error) {
-      // Handle timeout errors
-      if (error.code === 'ECONNABORTED') {
-        setError("Request timeout. Please check your connection and try again.")
-        dispatch(signInFailure("Request timeout. Please check your connection and try again."))
-        toast.error("Request timeout. Please check your connection and try again.")
+      if (error.code === "ECONNABORTED") {
+        setError("Request timeout. Please check your connection and try again.");
+        dispatch(signInFailure("Request timeout. Please check your connection and try again."));
+        toast.error("Request timeout. Please check your connection and try again.");
       } else if (error.response && error.response.data.message) {
-        setError(error.response.data.message)
-        dispatch(signInFailure(error.response.data.message))
-        toast.error(error.response.data.message)
+        setError(error.response.data.message);
+        dispatch(signInFailure(error.response.data.message));
+        toast.error(error.response.data.message);
       } else if (error.message) {
-        setError(error.message)
-        dispatch(signInFailure(error.message))
-        toast.error(error.message)
+        setError(error.message);
+        dispatch(signInFailure(error.message));
+        toast.error(error.message);
       } else {
-        setError("Something went wrong. Please try again!")
-        dispatch(signInFailure("Something went wrong. Please try again!"))
-        toast.error("Something went wrong. Please try again!")
+        setError("Something went wrong. Please try again!");
+        dispatch(signInFailure("Something went wrong. Please try again!"));
+        toast.error("Something went wrong. Please try again!");
       }
     }
-   }
+  };
+
   return (
     <AuthLayout>
-         <div className="w-full max-w-md">
+      <div className="w-full max-w-md">
         <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
-          {/* Gradient top border */}
+
           <div className="h-2 bg-gradient-to-r from-blue-600 to-blue-400"></div>
 
           <div className="p-8">
-            {/* Logo and title */}
+
             <div className="text-center mb-8">
               <div className="flex justify-center">
                 <div className="bg-blue-100 p-3 rounded-full">
@@ -116,8 +107,8 @@ const Login = () => {
               </p>
             </div>
 
-            {/* Login Form */}
             <form onSubmit={handleSubmit} className="space-y-6">
+
               <div>
                 <label
                   htmlFor="email"
@@ -169,18 +160,13 @@ const Login = () => {
 
               {error && <p className="text-red-500 text-sm">{error}</p>}
 
-            <button
-                    type="submit"
-                    disabled={loading}
-                    className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                      loading
-                        ? "bg-blue-400 cursor-not-allowed"
-                        : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
-                    } focus:outline-none focus:ring-0 focus:ring-offset-0`}
-                  >
-                    {loading ? "Loading..." : "LOGIN"}
-                  </button>
-                  
+              <button
+                type="submit"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 cursor-pointer focus:outline-none"
+              >
+                LOGIN
+              </button>
+
             </form>
 
             <div className="mt-6 text-center text-sm">
@@ -194,6 +180,7 @@ const Login = () => {
                 </Link>
               </p>
             </div>
+
           </div>
         </div>
       </div>
